@@ -63,9 +63,10 @@ namespace RealEstateAgency
         }
         private byte[] HashPassword(string password, byte[] salt)
         {
-            using (Rfc2898DeriveBytes pbkdf2 = new Rfc2898DeriveBytes(password, salt, 10000, HashAlgorithmName.SHA256))
+            byte[] saltedPassword = Encoding.UTF8.GetBytes(password).Concat(salt).ToArray();
+            using (SHA256 sha256 = SHA256.Create())
             {
-                return pbkdf2.GetBytes(64);
+                return sha256.ComputeHash(saltedPassword);
             }
         }
         private void setPassword(int id, string password)
@@ -165,9 +166,14 @@ namespace RealEstateAgency
                     byte[] storedSalt = storedPasswordData.PasswordSalt;
                     byte[] storedHash = storedPasswordData.PasswordHash;
 
-                    byte[] enteredPasswordHash = HashPassword(password, storedSalt);
+                    byte[] saltedPassword = Encoding.UTF8.GetBytes(password).Concat(storedSalt).ToArray();
+                    byte[] hashedPassword;
+                    using (SHA256 sha256 = SHA256.Create())
+                    {
+                        hashedPassword = sha256.ComputeHash(saltedPassword);
+                    }
 
-                    if (enteredPasswordHash.SequenceEqual(storedHash))
+                    if (hashedPassword.SequenceEqual(storedHash))
                     {
                         userId = user.IdPerson;
                         isAuthorized = true;
