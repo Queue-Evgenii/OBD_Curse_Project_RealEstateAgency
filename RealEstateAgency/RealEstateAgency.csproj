@@ -215,12 +215,6 @@
     <Compile Include="EditObjects\EditForm.Designer.cs">
       <DependentUpon>EditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormTemp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormTemp.Designer.cs">
-      <DependentUpon>FormTemp.cs</DependentUpon>
-    </Compile>
     <Compile Include="Models\db\Apartament.cs" />
     <Compile Include="Models\db\Deal.cs" />
     <Compile Include="Models\db\District.cs" />
@@ -291,9 +285,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditObjects\EditForm.resx">
       <DependentUpon>EditForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="FormTemp.resx">
-      <DependentUpon>FormTemp.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
