@@ -125,9 +125,18 @@ namespace RealEstateAgency
                 return;
             }
 
-            if (conn.Person.Any(el => el.Email == email))
+            
+            try
             {
-                MessageBox.Show("Щось пішло не так :(\nКористувач з такою електронною адресою вже існує!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                if (conn.Person.Any(el => el.Email == email))
+                {
+                    MessageBox.Show("Щось пішло не так :(\nКористувач з такою електронною адресою вже існує!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Щось пішло не так :(\nНемає підключення!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -136,7 +145,17 @@ namespace RealEstateAgency
 
         private void authorization(string email, string password)
         {
-            Person user = conn.Person.SingleOrDefault(el => el.Email == email);
+            Person user = null;
+            try
+            {
+               user = conn.Person.SingleOrDefault(el => el.Email == email);
+            }
+            catch
+            {
+                MessageBox.Show("Щось пішло не так :(\nНемає підключення!", "Помилка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             if (user != null)
             {
                 Passwords storedPasswordData = conn.Passwords.FirstOrDefault(p => p.IdPerson == user.IdPerson);
