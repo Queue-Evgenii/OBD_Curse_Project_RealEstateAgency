@@ -69,7 +69,7 @@ namespace RealEstateAgency.Models.db
                 entity.HasOne(d => d.IdShowNavigation)
                     .WithMany(p => p.Deal)
                     .HasForeignKey(d => d.IdShow)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("FK_Deal_Show");
             });
 

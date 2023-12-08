@@ -26,7 +26,7 @@ namespace RealEstateAgency
                 return;
             }
 
-            AuthorizationForm authForm = new AuthorizationForm(conn);
+            /*AuthorizationForm authForm = new AuthorizationForm(conn);
             Application.Run(authForm);
 
             if (authForm.isAuthorized)
@@ -34,7 +34,10 @@ namespace RealEstateAgency
                 conn = new RealEstateAgencyContext();
                 App app = new App(authForm.userId, conn);
                 Application.Run(app);
-            }
+            }*/
+
+            App app = new App(1, conn);
+            Application.Run(app);
         }
     }
 }

@@ -14,7 +14,7 @@ namespace RealEstateAgency.Models.MyDataTypes
 
         public MyPublicationsList(RealEstateAgencyContext conn, int userId) : base(conn)
         {
-            _myPublications = _originalPublicationsList.Where(el => el.IdPerson == userId).OrderByDescending(el => el.PublishDate).ToList();
+            _myPublications = _originalPublicationsList = conn.RealEstateObject.Where(el => el.IdPerson == userId).OrderByDescending(el => el.PublishDate).ToList();
             _status = conn.ObjectStatus.ToList();
         }
 

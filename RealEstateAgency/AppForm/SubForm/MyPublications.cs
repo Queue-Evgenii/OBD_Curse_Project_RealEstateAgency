@@ -179,14 +179,22 @@ namespace RealEstateAgency
                 DialogResult res = MessageBox.Show("Ви впевнені, що хочете видаллити публікацію?", "", MessageBoxButtons.YesNo);
                 if (res.GetHashCode() == 6)
                 {
+                    List<Show> list = conn.Show.Where(el => el.IdObject == item.IdObject).ToList();
+                    foreach (Show show in list)
+                    {
+                        Deal deal = conn.Deal.Where(el => el.IdShow == show.IdShow).SingleOrDefault();
+                        if (deal != null)
+                        {
+                            conn.Deal.Remove(deal);
+                        }
+
+                        conn.Show.Remove(show);
+                    }
                     conn.RealEstateObject.Remove(item);
                     conn.SaveChanges();
-                    form.FormClosed += (object sender2, FormClosedEventArgs e2) =>
-                    {
-                        clearPublicationsList(myPublicationsListLayout);
-                        myPublications = new MyPublicationsList(conn, id);
-                        setMyPublicationsList(myPublications.get());
-                    };
+                    clearPublicationsList(myPublicationsListLayout);
+                    myPublications = new MyPublicationsList(conn, id);
+                    setMyPublicationsList(myPublications.get());
                 }
             };
 
